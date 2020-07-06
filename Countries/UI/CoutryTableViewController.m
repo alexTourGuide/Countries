@@ -40,6 +40,8 @@ static NSString *kTableViewIndentifier = @"kTableViewIndentifier";
     [self startLoading];
 }
 
+#pragma mark - Helpers
+
 - (void)startLoading {
     __weak typeof(self) weakSelf = self;
     [self.activityIndicator startAnimating];

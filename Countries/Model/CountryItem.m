@@ -28,40 +28,44 @@
     return self;
 }
 
+#pragma mark - Modify text
+
 - (NSString *)countryNameFromItem:(NSString *)item {
     NSMutableString *countryName = [item mutableCopy];
-    [countryName replaceOccurrencesOfString:@"Flag_of_" withString:@"" options:NSCaseInsensitiveSearch range:NSMakeRange(0, countryName.length)];
-    [countryName replaceOccurrencesOfString:@".svg" withString:@"" options:NSCaseInsensitiveSearch range:NSMakeRange(0, countryName.length)];
-    [countryName replaceOccurrencesOfString:@"the_" withString:@"" options:NSCaseInsensitiveSearch range:NSMakeRange(0, countryName.length)];
+    
+    [self removeBeginningAndEnding:countryName];
     [countryName replaceOccurrencesOfString:@"_" withString:@" " options:NSCaseInsensitiveSearch range:NSMakeRange(0, countryName.length)];
     
-    
-    NSRange openBracket = [countryName rangeOfString:@"("];
-    NSRange closeBracket = [countryName rangeOfString:@")"];
-    if (!(openBracket.location == NSNotFound) && !(closeBracket.location == NSNotFound)) {
-        [countryName deleteCharactersInRange:NSMakeRange(openBracket.location-1, closeBracket.location-openBracket.location+2)];
-        return countryName;
+    if ([countryName containsString:@"("]) {
+        [self removeAdditionalTextInBrackets:countryName];
     }
-    
     return countryName;
 }
 
 - (NSString *)countryNamePartOfURLFromItem:(NSString *)item {
     NSMutableString *countryName = [item mutableCopy];
-    [countryName replaceOccurrencesOfString:@"Flag_of_" withString:@"" options:NSCaseInsensitiveSearch range:NSMakeRange(0, countryName.length)];
-    [countryName replaceOccurrencesOfString:@".svg" withString:@"" options:NSCaseInsensitiveSearch range:NSMakeRange(0, countryName.length)];
-    [countryName replaceOccurrencesOfString:@"the_" withString:@"" options:NSCaseInsensitiveSearch range:NSMakeRange(0, 4)];
+    [self removeBeginningAndEnding:countryName];
     
-    NSRange openBracket = [countryName rangeOfString:@"("];
-    NSRange closeBracket = [countryName rangeOfString:@")"];
-    if (!(openBracket.location == NSNotFound) && !(closeBracket.location == NSNotFound)) {
-        [countryName deleteCharactersInRange:NSMakeRange(openBracket.location-1, closeBracket.location-openBracket.location+2)];
-        NSString *lowercaceStr = [countryName localizedLowercaseString];
-        return lowercaceStr;
+    if ([countryName containsString:@"("]) {
+        [self removeAdditionalTextInBrackets:countryName];
     }
-    
-    NSString *lowercaceStr = [countryName localizedLowercaseString];
-    return lowercaceStr;
+    return [countryName localizedLowercaseString];
+}
+
+#pragma mark - Removing helpers
+
+- (NSMutableString *)removeAdditionalTextInBrackets:(NSMutableString *)stringWithBrackets {
+    NSRange openBracket = [stringWithBrackets rangeOfString:@"("];
+    NSRange closeBracket = [stringWithBrackets rangeOfString:@")"];
+    [stringWithBrackets deleteCharactersInRange:NSMakeRange(openBracket.location-1, closeBracket.location-openBracket.location+2)];
+    return stringWithBrackets;
+}
+
+- (NSMutableString *)removeBeginningAndEnding:(NSMutableString *)stringToBeCutting {
+    [stringToBeCutting replaceOccurrencesOfString:@"Flag_of_" withString:@"" options:NSCaseInsensitiveSearch range:NSMakeRange(0, stringToBeCutting.length)];
+    [stringToBeCutting replaceOccurrencesOfString:@".svg" withString:@"" options:NSCaseInsensitiveSearch range:NSMakeRange(0, stringToBeCutting.length)];
+    [stringToBeCutting replaceOccurrencesOfString:@"the_" withString:@"" options:NSCaseInsensitiveSearch range:NSMakeRange(0, stringToBeCutting.length)];
+    return stringToBeCutting;
 }
 
 @end

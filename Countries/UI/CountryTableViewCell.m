@@ -38,24 +38,24 @@
     self.countryNameLabel = [UILabel new];
     [self addSubview:self.countryNameLabel];
     self.countryNameLabel.translatesAutoresizingMaskIntoConstraints = NO;
-    [NSLayoutConstraint activateConstraints:@[
-        [self.countryNameLabel.leadingAnchor constraintEqualToAnchor:self.leadingAnchor constant:20.0],
-        [self.countryNameLabel.centerYAnchor constraintEqualToAnchor:self.centerYAnchor]
-    ]];
     
     self.capitalNameLabel = [UILabel new];
     [self addSubview:self.capitalNameLabel];
     self.capitalNameLabel.translatesAutoresizingMaskIntoConstraints = NO;
-    [NSLayoutConstraint activateConstraints:@[
-        [self.capitalNameLabel.leadingAnchor constraintEqualToAnchor:self.leadingAnchor constant:100.0],
-        [self.capitalNameLabel.centerYAnchor constraintEqualToAnchor:self.centerYAnchor]
-    ]];
     
     self.flagImageView = [UIImageView new];
     [self addSubview:self.flagImageView];
     self.flagImageView.translatesAutoresizingMaskIntoConstraints = NO;
+    
+    // Activate constraints
     [NSLayoutConstraint activateConstraints:@[
-        [self.flagImageView.trailingAnchor constraintEqualToAnchor:self.trailingAnchor constant:-20.0],
+        [self.countryNameLabel.leadingAnchor constraintEqualToAnchor:self.safeAreaLayoutGuide.leadingAnchor constant:15.0],
+        [self.countryNameLabel.centerYAnchor constraintEqualToAnchor:self.centerYAnchor],
+        
+        [self.capitalNameLabel.leadingAnchor constraintEqualToAnchor:self.safeAreaLayoutGuide.leadingAnchor constant:90.0],
+        [self.capitalNameLabel.centerYAnchor constraintEqualToAnchor:self.centerYAnchor],
+        
+        [self.flagImageView.trailingAnchor constraintEqualToAnchor:self.safeAreaLayoutGuide.trailingAnchor constant:-15.0],
         [self.flagImageView.centerYAnchor constraintEqualToAnchor:self.centerYAnchor],
         [self.flagImageView.heightAnchor constraintEqualToAnchor:self.heightAnchor multiplier:0.7],
         [self.flagImageView.widthAnchor constraintEqualToAnchor:self.flagImageView.heightAnchor multiplier:1.4]
@@ -66,7 +66,6 @@
     self.countryNameLabel.text = country.countryName;
     self.capitalNameLabel.text = country.countryCapital;
     self.flagImageView.image = country.flagImage ? country.flagImage : [UIImage imageNamed:@"flag_placeholder"];
-    
 }
 
 - (void)setSelected:(BOOL)selected animated:(BOOL)animated {

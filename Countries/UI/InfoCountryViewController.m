@@ -39,6 +39,8 @@
     [self.webView stopLoading];
 }
 
+#pragma mark - Setups
+
 - (void)setupViews {
     self.webView = [WKWebView new];
     [self.view addSubview:self.webView];
@@ -53,10 +55,14 @@
     self.webView.navigationDelegate = self;
 }
 
+#pragma mark - Helpers
+
 - (void)loadPage {
     [self.webView loadRequest:[NSURLRequest requestWithURL:[NSURL URLWithString:self.url]]];
     [self.webView allowsBackForwardNavigationGestures];
 }
+
+#pragma mark - WKNavigationDelegate methods
 
 - (void)webView:(WKWebView *)webView didFinishNavigation:(WKNavigation *)navigation {
     self.title = webView.title;
