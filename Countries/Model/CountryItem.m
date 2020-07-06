@@ -32,7 +32,17 @@
     NSMutableString *countryName = [item mutableCopy];
     [countryName replaceOccurrencesOfString:@"Flag_of_" withString:@"" options:NSCaseInsensitiveSearch range:NSMakeRange(0, countryName.length)];
     [countryName replaceOccurrencesOfString:@".svg" withString:@"" options:NSCaseInsensitiveSearch range:NSMakeRange(0, countryName.length)];
+    [countryName replaceOccurrencesOfString:@"the_" withString:@"" options:NSCaseInsensitiveSearch range:NSMakeRange(0, countryName.length)];
     [countryName replaceOccurrencesOfString:@"_" withString:@" " options:NSCaseInsensitiveSearch range:NSMakeRange(0, countryName.length)];
+    
+    
+    NSRange openBracket = [countryName rangeOfString:@"("];
+    NSRange closeBracket = [countryName rangeOfString:@")"];
+    if (!(openBracket.location == NSNotFound) && !(closeBracket.location == NSNotFound)) {
+        [countryName deleteCharactersInRange:NSMakeRange(openBracket.location-1, closeBracket.location-openBracket.location+2)];
+        return countryName;
+    }
+    
     return countryName;
 }
 
@@ -41,6 +51,15 @@
     [countryName replaceOccurrencesOfString:@"Flag_of_" withString:@"" options:NSCaseInsensitiveSearch range:NSMakeRange(0, countryName.length)];
     [countryName replaceOccurrencesOfString:@".svg" withString:@"" options:NSCaseInsensitiveSearch range:NSMakeRange(0, countryName.length)];
     [countryName replaceOccurrencesOfString:@"the_" withString:@"" options:NSCaseInsensitiveSearch range:NSMakeRange(0, 4)];
+    
+    NSRange openBracket = [countryName rangeOfString:@"("];
+    NSRange closeBracket = [countryName rangeOfString:@")"];
+    if (!(openBracket.location == NSNotFound) && !(closeBracket.location == NSNotFound)) {
+        [countryName deleteCharactersInRange:NSMakeRange(openBracket.location-1, closeBracket.location-openBracket.location+2)];
+        NSString *lowercaceStr = [countryName localizedLowercaseString];
+        return lowercaceStr;
+    }
+    
     NSString *lowercaceStr = [countryName localizedLowercaseString];
     return lowercaceStr;
 }

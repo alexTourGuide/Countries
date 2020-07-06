@@ -43,6 +43,7 @@
         if (!data) { return; }
         // создаем изображение из imageWithData:data
         UIImage *image = [UIImage imageWithData:data];
+        if (!image) { return; }
         // Устанавливаем изображение в проперти
         weakSelf.image = image;
         // в комплишн передаем image

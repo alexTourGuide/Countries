@@ -42,7 +42,7 @@
     NSURL *url = [NSURL URLWithString:@"https://en.wikipedia.org/w/api.php?action=parse&page=Gallery_of_sovereign_state_flags&format=json"];
         
     NSMutableURLRequest *request = [NSMutableURLRequest requestWithURL:url];
-    request.HTTPMethod = @"POST";
+    request.HTTPMethod = @"GET";
 
     NSURLSessionDataTask *dataTask = [self.session dataTaskWithRequest:request
                                                      completionHandler:^(NSData *data, NSURLResponse *response, NSError *error) {
